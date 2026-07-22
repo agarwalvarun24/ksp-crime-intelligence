@@ -1,4 +1,4 @@
-import DashboardCard from "./DashboardCard";
+import { useEffect, useState } from "react";
 import {
   Shield,
   AlertTriangle,
@@ -6,32 +6,59 @@ import {
   MapPin,
 } from "lucide-react";
 
+import DashboardCard from "./DashboardCard";
+import { getDashboardSummary } from "../../api/dashboardApi";
+
 function StatsGrid() {
-  const stats = [
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        const data = await getDashboardSummary();
+
+        setStats(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadDashboard();
+  }, []);
+
+  if (!stats) {
+    return (
+      <div className="text-white">
+        Loading Dashboard...
+      </div>
+    );
+  }
+
+  const cards = [
     {
       title: "Total Cases",
-      value: "1,452",
+      value: stats.totalCases,
       icon: Shield,
       color: "blue",
       change: 12,
     },
     {
       title: "Active Cases",
-      value: "386",
+      value: stats.activeCases,
       icon: AlertTriangle,
       color: "red",
       change: -3,
     },
     {
       title: "Solved Cases",
-      value: "1,066",
+      value: stats.solvedCases,
       icon: CheckCircle,
       color: "green",
       change: 8,
     },
     {
       title: "Crime Hotspots",
-      value: "23",
+      value: stats.hotspots,
       icon: MapPin,
       color: "yellow",
       change: 5,
@@ -40,14 +67,10 @@ function StatsGrid() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-      {stats.map((item) => (
+      {cards.map((card) => (
         <DashboardCard
-          key={item.title}
-          title={item.title}
-          value={item.value}
-          icon={item.icon}
-          color={item.color}
-          change={item.change}
+          key={card.title}
+          {...card}
         />
       ))}
     </div>
