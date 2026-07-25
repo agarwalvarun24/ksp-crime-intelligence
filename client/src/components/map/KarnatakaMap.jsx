@@ -45,14 +45,17 @@ function KarnatakaMap({ filters }) {
   const [crimes, setCrimes] = useState([]);
 
   useEffect(() => {
-    async function load() {
+  async function load() {
+    try {
       const data = await getCrimes(filters);
       setCrimes(data);
+    } catch (err) {
+      console.error(err);
     }
+  }
 
-    load();
-  }, []);
-
+  load();
+}, [filters]);
   const getIcon = (severity) => {
     if (severity === "High") return highIcon;
     if (severity === "Medium") return mediumIcon;

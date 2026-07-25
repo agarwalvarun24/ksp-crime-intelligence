@@ -9,6 +9,8 @@ const healthRoutes = require("./routes/health.routes");
 
 const app = express();
 const crimeRoutes = require("./routes/crime.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
+app.use("/analytics", analyticsRoutes);
 
 app.use("/crime", crimeRoutes);
 
