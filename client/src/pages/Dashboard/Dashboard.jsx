@@ -5,7 +5,7 @@ import QuickActions from "../../components/dashboard/QuickActions";
 import CrimeTrendChart from "../../components/charts/CrimeTrendChart";
 import CrimeCategoryChart from "../../components/charts/CrimeCategoryChart";
 import CrimeStatusChart from "../../components/charts/CrimeStatusChart";
-
+import AIInsights from "../../components/dashboard/AIInsights";
 function Dashboard() {
   return (
     <div className="min-h-screen bg-slate-950 p-8">
@@ -43,8 +43,13 @@ function Dashboard() {
         <QuickActions />
 
       </div>
+      <div className="grid xl:grid-cols-2 gap-6 mt-6">
+    <AIInsights />
+    <RecentActivity />
+</div>
 
     </div>
+    
   );
 }
 

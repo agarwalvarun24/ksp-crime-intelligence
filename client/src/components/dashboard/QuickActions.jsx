@@ -1,67 +1,78 @@
 import {
-  FilePlus2,
+  FileText,
+  Search,
+  Users,
   MapPinned,
-  BarChart3,
-  Download,
+  Brain,
+  Bell,
 } from "lucide-react";
 
 const actions = [
   {
     title: "Register FIR",
-    description: "Create a new FIR entry",
-    icon: FilePlus2,
-    color: "bg-blue-600 hover:bg-blue-700",
+    icon: FileText,
+    color: "bg-blue-600",
   },
   {
-    title: "Open Crime Map",
-    description: "View hotspots across Karnataka",
+    title: "Search Cases",
+    icon: Search,
+    color: "bg-green-600",
+  },
+  {
+    title: "Officer Directory",
+    icon: Users,
+    color: "bg-purple-600",
+  },
+  {
+    title: "Crime Map",
     icon: MapPinned,
-    color: "bg-red-600 hover:bg-red-700",
+    color: "bg-red-600",
   },
   {
-    title: "Analytics",
-    description: "View crime trends and insights",
-    icon: BarChart3,
-    color: "bg-green-600 hover:bg-green-700",
+    title: "AI Prediction",
+    icon: Brain,
+    color: "bg-cyan-600",
   },
   {
-    title: "Export Report",
-    description: "Generate PDF report",
-    icon: Download,
-    color: "bg-purple-600 hover:bg-purple-700",
+    title: "Alerts",
+    icon: Bell,
+    color: "bg-orange-600",
   },
 ];
 
 function QuickActions() {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
       <h2 className="text-xl font-semibold text-white mb-6">
         Quick Actions
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+
         {actions.map((action) => {
           const Icon = action.icon;
 
           return (
             <button
               key={action.title}
-              className={`${action.color} rounded-xl p-5 text-left transition-all duration-300 hover:scale-[1.02]`}
+              className="rounded-xl bg-slate-800 hover:bg-slate-700 transition p-6 text-center"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <Icon size={24} className="text-white" />
-                <h3 className="text-white font-semibold">
-                  {action.title}
-                </h3>
+              <div
+                className={`w-14 h-14 ${action.color} rounded-xl flex items-center justify-center mx-auto`}
+              >
+                <Icon size={26} color="white" />
               </div>
 
-              <p className="text-white/80 text-sm">
-                {action.description}
+              <p className="mt-4 text-white font-medium">
+                {action.title}
               </p>
             </button>
           );
         })}
+
       </div>
+
     </div>
   );
 }
