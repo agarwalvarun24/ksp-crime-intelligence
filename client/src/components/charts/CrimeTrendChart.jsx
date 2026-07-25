@@ -1,67 +1,46 @@
+import { useEffect, useState } from "react";
+import { getAnalytics } from "../../api/analyticsApi";
 import {
   ResponsiveContainer,
   LineChart,
   Line,
+  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
 } from "recharts";
-import { useEffect, useState } from "react";
-import { getDashboardSummary } from "../../api/dashboardApi";
 
 function CrimeTrendChart() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    async function loadData() {
-      try {
-        const dashboard = await getDashboardSummary();
-        setData(dashboard.trend || []);
-      } catch (err) {
-        console.error(err);
-      }
+    async function load() {
+      const analytics = await getAnalytics();
+      setData(analytics.monthlyTrend);
     }
-
-    loadData();
+    load();
   }, []);
 
   return (
-    <div className="bg-slate-900 rounded-xl p-5 shadow-lg border border-slate-800">
-      <h2 className="text-lg font-semibold text-white mb-4">
-        Crime Trend Analysis
+    <div className="bg-slate-900 rounded-xl p-5">
+      <h2 className="text-white text-xl font-semibold mb-4">
+        Monthly Crime Trend
       </h2>
 
-      <div style={{ width: "100%", height: 320 }}>
-        <ResponsiveContainer>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-
-            <XAxis
-              dataKey="month"
-              tick={{ fill: "#CBD5E1" }}
-              axisLine={false}
-              tickLine={false}
-            />
-
-            <YAxis
-              tick={{ fill: "#CBD5E1" }}
-              axisLine={false}
-              tickLine={false}
-            />
-
-            <Tooltip />
-
-            <Line
-              type="monotone"
-              dataKey="crimes"
-              stroke="#3B82F6"
-              strokeWidth={3}
-              dot={{ r: 4 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height={320}>
+        <LineChart data={data}>
+          <CartesianGrid stroke="#334155" />
+          <XAxis dataKey="month" stroke="#CBD5E1" />
+          <YAxis stroke="#CBD5E1" />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey="crimes"
+            stroke="#3B82F6"
+            strokeWidth={3}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
