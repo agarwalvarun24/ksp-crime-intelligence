@@ -1,64 +1,113 @@
 import { useEffect, useState } from "react";
-import {
-  ReactFlow,
+
+import ReactFlow, {
   Background,
   Controls,
-} from "@xyflow/react";
+} from "reactflow";
 
-import "@xyflow/react/dist/style.css";
+import "reactflow/dist/style.css";
 
 import { getNetwork } from "../../api/networkApi";
+
 
 function NetworkGraph() {
 
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
 
+
   useEffect(() => {
-    async function load() {
 
-      const data = await getNetwork();
+    async function loadNetwork() {
 
-      const graphNodes = data.nodes.map((node, index) => ({
-        id: node.id,
-        data: {
-          label: node.label,
-        },
-        position: {
-          x: 200 * (index % 3),
-          y: 150 * Math.floor(index / 3),
-        },
-      }));
+      try {
 
-      const graphEdges = data.edges.map((edge, index) => ({
-        id: `e${index}`,
-        source: edge.source,
-        target: edge.target,
-        animated: true,
-      }));
+        const data = await getNetwork();
 
-      setNodes(graphNodes);
-      setEdges(graphEdges);
+
+        const formattedNodes = data.nodes.map((node,index)=>({
+
+          id: node.id,
+
+          data:{
+            label: node.label
+          },
+
+          position:{
+            x:(index % 3) * 250,
+            y:Math.floor(index / 3) * 150
+          }
+
+        }));
+
+
+        const formattedEdges = data.edges.map((edge,index)=>({
+
+          id:`edge-${index}`,
+
+          source:edge.source,
+
+          target:edge.target,
+
+          animated:true
+
+        }));
+
+
+        setNodes(formattedNodes);
+        setEdges(formattedEdges);
+
+
+      } catch(error){
+
+        console.error(
+          "Network loading error:",
+          error
+        );
+
+      }
+
     }
 
-    load();
-  }, []);
+
+    loadNetwork();
+
+
+  },[]);
+
+
 
   return (
+
     <div
-      className="rounded-xl border border-slate-700 overflow-hidden"
-      style={{ height: "700px" }}
+      style={{
+        height:"650px"
+      }}
+      className="bg-slate-900 rounded-xl border border-slate-700"
     >
+
       <ReactFlow
+
         nodes={nodes}
+
         edges={edges}
+
         fitView
+
       >
-        <Background />
-        <Controls />
+
+        <Background/>
+
+        <Controls/>
+
       </ReactFlow>
+
+
     </div>
+
   );
+
 }
+
 
 export default NetworkGraph;
