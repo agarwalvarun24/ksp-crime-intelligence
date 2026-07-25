@@ -1,56 +1,104 @@
 import { useEffect, useState } from "react";
-import { getDashboardSummary } from "../../api/dashboardApi";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
+
+import L from "leaflet";
+
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+
+import { getCrimes } from "../../api/crimeApi";
+
+const highIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+const mediumIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+
+const lowIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
 
 function KarnatakaMap() {
-  const [districts, setDistricts] = useState([]);
+  const [crimes, setCrimes] = useState([]);
 
   useEffect(() => {
     async function load() {
-      try {
-        const dashboard = await getDashboardSummary();
-        setDistricts(dashboard.districtCrime || []);
-      } catch (err) {
-        console.error(err);
-      }
+      const data = await getCrimes();
+      setCrimes(data);
     }
 
     load();
   }, []);
 
+  const getIcon = (severity) => {
+    if (severity === "High") return highIcon;
+    if (severity === "Medium") return mediumIcon;
+    return lowIcon;
+  };
+
   return (
-    <div className="bg-slate-900 rounded-xl border border-slate-800 p-5 shadow-lg h-full">
-      <h2 className="text-lg font-semibold text-white mb-5">
-        Crime Hotspots (Top Districts)
-      </h2>
+    <div className="rounded-xl overflow-hidden shadow-lg border border-slate-700">
+      <MapContainer
+        center={[15.3173, 75.7139]}
+        zoom={7}
+        style={{ height: "650px", width: "100%" }}
+      >
+        <TileLayer
+          attribution="OpenStreetMap"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-      <div className="grid grid-cols-2 gap-3">
-        {districts.map((district) => (
-          <div
-            key={district.district}
-            className="rounded-lg bg-slate-800 p-4 hover:bg-slate-700 transition"
+        {crimes.map((crime) => (
+          <Marker
+            key={crime.id}
+            position={[crime.latitude, crime.longitude]}
+            icon={getIcon(crime.severity)}
           >
-            <div className="text-white font-medium">
-              {district.district}
-            </div>
+            <Popup>
+              <h2>
+                <strong>{crime.district}</strong>
+              </h2>
 
-            <div className="mt-3 h-2 rounded bg-slate-700 overflow-hidden">
-              <div
-                className="h-full bg-red-500"
-                style={{
-                  width: `${Math.min(
-                    (district.crimes / 700) * 100,
-                    100
-                  )}%`,
-                }}
-              />
-            </div>
+              <p>
+                <strong>Crime:</strong> {crime.crimeType}
+              </p>
 
-            <div className="text-red-400 mt-2 text-sm">
-              {district.crimes} Crimes
-            </div>
-          </div>
+              <p>
+                <strong>Severity:</strong> {crime.severity}
+              </p>
+
+              <p>
+                <strong>Status:</strong> {crime.status}
+              </p>
+
+              <p>{crime.description}</p>
+            </Popup>
+          </Marker>
         ))}
-      </div>
+      </MapContainer>
     </div>
   );
 }
