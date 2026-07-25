@@ -3,63 +3,54 @@ import {
   Shield,
   AlertTriangle,
   CheckCircle,
-  MapPin,
+  Users,
 } from "lucide-react";
 
 import DashboardCard from "./DashboardCard";
 import { getDashboardSummary } from "../../api/dashboardApi";
 
 function StatsGrid() {
-  const [stats, setStats] = useState(null);
+  const [summary, setSummary] = useState(null);
 
   useEffect(() => {
     async function loadDashboard() {
-      try {
-        const data = await getDashboardSummary();
-
-        setStats(data);
-      } catch (err) {
-        console.error(err);
-      }
+      const dashboard = await getDashboardSummary();
+      setSummary(dashboard.summary);
     }
 
     loadDashboard();
   }, []);
 
-  if (!stats) {
-    return (
-      <div className="text-white">
-        Loading Dashboard...
-      </div>
-    );
+  if (!summary) {
+    return <div className="text-white">Loading...</div>;
   }
 
   const cards = [
     {
-      title: "Total Cases",
-      value: stats.totalCases,
+      title: "Total Crimes",
+      value: summary.totalCrimes,
       icon: Shield,
       color: "blue",
       change: 12,
     },
     {
       title: "Active Cases",
-      value: stats.activeCases,
+      value: summary.activeCases,
       icon: AlertTriangle,
       color: "red",
       change: -3,
     },
     {
       title: "Solved Cases",
-      value: stats.solvedCases,
+      value: summary.solvedCases,
       icon: CheckCircle,
       color: "green",
       change: 8,
     },
     {
-      title: "Crime Hotspots",
-      value: stats.hotspots,
-      icon: MapPin,
+      title: "Officers",
+      value: summary.officersDeployed,
+      icon: Users,
       color: "yellow",
       change: 5,
     },
@@ -68,10 +59,7 @@ function StatsGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       {cards.map((card) => (
-        <DashboardCard
-          key={card.title}
-          {...card}
-        />
+        <DashboardCard key={card.title} {...card} />
       ))}
     </div>
   );
