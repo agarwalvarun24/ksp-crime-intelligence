@@ -41,12 +41,12 @@ const lowIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-function KarnatakaMap() {
+function KarnatakaMap({ filters }) {
   const [crimes, setCrimes] = useState([]);
 
   useEffect(() => {
     async function load() {
-      const data = await getCrimes();
+      const data = await getCrimes(filters);
       setCrimes(data);
     }
 

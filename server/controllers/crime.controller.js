@@ -13,3 +13,11 @@ exports.getCrimeStatistics = (req, res) => {
     data: crimeService.getCrimeStatistics()
   });
 };
+exports.getAllCrimes = (req, res) => {
+  const data = crimeService.getAllCrimes(req.query);
+
+  res.json({
+    success: true,
+    data
+  });
+};
