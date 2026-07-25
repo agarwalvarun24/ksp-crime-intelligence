@@ -10,102 +10,115 @@ import "reactflow/dist/style.css";
 import { getNetwork } from "../../api/networkApi";
 
 
-function NetworkGraph() {
+function NetworkGraph(){
 
-  const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState([]);
-
-
-  useEffect(() => {
-
-    async function loadNetwork() {
-
-      try {
-
-        const data = await getNetwork();
+    const [nodes,setNodes] = useState([]);
+    const [edges,setEdges] = useState([]);
 
 
-        const formattedNodes = data.nodes.map((node,index)=>({
+    useEffect(()=>{
 
-          id: node.id,
+        async function load(){
 
-          data:{
-            label: node.label
-          },
+            try{
 
-          position:{
-            x:(index % 3) * 250,
-            y:Math.floor(index / 3) * 150
-          }
+                const data = await getNetwork();
 
-        }));
+                console.log(
+                    "NETWORK DATA:",
+                    data
+                );
 
 
-        const formattedEdges = data.edges.map((edge,index)=>({
+                const formattedNodes = data.nodes.map(
+                    (node,index)=>({
 
-          id:`edge-${index}`,
+                        id: node.id,
 
-          source:edge.source,
+                        data:{
+                            label: node.label
+                        },
 
-          target:edge.target,
+                        position:{
+                            x:(index%3)*250,
+                            y:Math.floor(index/3)*180
+                        }
 
-          animated:true
-
-        }));
-
-
-        setNodes(formattedNodes);
-        setEdges(formattedEdges);
-
-
-      } catch(error){
-
-        console.error(
-          "Network loading error:",
-          error
-        );
-
-      }
-
-    }
+                    })
+                );
 
 
-    loadNetwork();
+                const formattedEdges = data.edges.map(
+                    (edge,index)=>({
+
+                        id:`edge-${index}`,
+
+                        source:edge.source,
+
+                        target:edge.target,
+
+                        animated:true
+
+                    })
+                );
 
 
-  },[]);
+                setNodes(formattedNodes);
+
+                setEdges(formattedEdges);
+
+
+            }
+            catch(error){
+
+                console.error(
+                    "Network Error:",
+                    error
+                );
+
+            }
+
+
+        }
+
+
+        load();
+
+
+    },[]);
 
 
 
-  return (
+    return(
 
-    <div
-      style={{
-        height:"650px"
-      }}
-      className="bg-slate-900 rounded-xl border border-slate-700"
-    >
+        <div
+            style={{
+                height:"650px",
+                width:"100%"
+            }}
+            className="bg-slate-900 rounded-xl"
+        >
 
-      <ReactFlow
+            <ReactFlow
 
-        nodes={nodes}
+                nodes={nodes}
 
-        edges={edges}
+                edges={edges}
 
-        fitView
+                fitView
 
-      >
+            >
 
-        <Background/>
+                <Background/>
 
-        <Controls/>
+                <Controls/>
 
-      </ReactFlow>
+            </ReactFlow>
 
 
-    </div>
+        </div>
 
-  );
+    );
 
 }
 
