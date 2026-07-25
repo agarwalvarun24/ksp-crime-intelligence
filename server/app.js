@@ -5,15 +5,14 @@ const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
-<<<<<<< HEAD
+
+// Routes
+const dashboardRoutes = require("./routes/dashboard.routes");
+const healthRoutes = require("./routes/health.routes");
 const crimeRoutes = require("./routes/crime.routes");
 const analyticsRoutes = require("./routes/analytics.routes");
-app.use("/analytics", analyticsRoutes);
-=======
->>>>>>> 2ac5fb6 (Analytics)
 
-/* ---------- MIDDLEWARE FIRST ---------- */
-
+// Middleware
 app.use(cors());
 
 app.use(express.json());
@@ -26,18 +25,13 @@ app.use(
 
 app.use(morgan("dev"));
 
-/* ---------- ROUTES ---------- */
-
-const dashboardRoutes = require("./routes/dashboard.routes");
-const healthRoutes = require("./routes/health.routes");
-const crimeRoutes = require("./routes/crime.routes");
-
+// API Routes
 app.use("/api/health", healthRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/crime", crimeRoutes);
+app.use("/analytics", analyticsRoutes);
 
-/* ---------- HOME ---------- */
-
+// Home Route
 app.get("/", (req, res) => {
   res.json({
     success: true,
