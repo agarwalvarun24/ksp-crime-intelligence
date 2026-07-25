@@ -1,14 +1,39 @@
-function Card({ title, value, color }) {
+import {
+  Users,
+  Smartphone,
+  Car,
+  Landmark,
+  FileWarning,
+} from "lucide-react";
+
+function Card({
+  title,
+  value,
+  icon,
+  color,
+}) {
   return (
-    <div className="bg-slate-900 rounded-xl p-5 border border-slate-700">
+    <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 hover:border-blue-500 transition">
 
-      <h3 className="text-gray-400 text-sm">
-        {title}
-      </h3>
+      <div className="flex justify-between items-center">
 
-      <h1 className={`text-3xl font-bold mt-2 ${color}`}>
-        {value}
-      </h1>
+        <div>
+
+          <p className="text-slate-400 text-sm">
+            {title}
+          </p>
+
+          <h2 className={`text-4xl font-bold mt-3 ${color}`}>
+            {value}
+          </h2>
+
+        </div>
+
+        <div className="text-slate-300">
+          {icon}
+        </div>
+
+      </div>
 
     </div>
   );
@@ -18,30 +43,41 @@ function NetworkStats() {
 
   return (
 
-    <div className="grid grid-cols-4 gap-5">
+    <div className="grid grid-cols-5 gap-6">
 
       <Card
         title="Suspects"
         value="2"
         color="text-red-500"
+        icon={<Users size={36} />}
       />
 
       <Card
         title="Phones"
         value="1"
         color="text-blue-500"
+        icon={<Smartphone size={36} />}
       />
 
       <Card
         title="Vehicles"
         value="1"
         color="text-green-500"
+        icon={<Car size={36} />}
+      />
+
+      <Card
+        title="Banks"
+        value="1"
+        color="text-yellow-500"
+        icon={<Landmark size={36} />}
       />
 
       <Card
         title="Cases"
         value="1"
         color="text-purple-500"
+        icon={<FileWarning size={36} />}
       />
 
     </div>

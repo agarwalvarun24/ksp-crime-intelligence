@@ -19,7 +19,7 @@
     "framer-motion": "^12.42.2",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
-    "lucide-react": "^1.25.0",
+    "lucide-react": "^1.26.0",
     "react": "^19.2.7",
     "react-countup": "^6.5.3",
     "react-cytoscapejs": "^2.0.0",
