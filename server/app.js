@@ -8,6 +8,9 @@ const dashboardRoutes = require("./routes/dashboard.routes");
 const healthRoutes = require("./routes/health.routes");
 
 const app = express();
+const crimeRoutes = require("./routes/crime.routes");
+
+app.use("/crime", crimeRoutes);
 
 app.use(cors());
 
