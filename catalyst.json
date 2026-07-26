@@ -1,0 +1,9 @@
+{
+  "functions": {
+    "targets": [
+      "ksp_crime_intelligence_function"
+    ],
+    "ignore": [],
+    "source": "functions"
+  }
+}
