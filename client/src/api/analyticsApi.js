@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://crime-api-50044357808.development.catalystappsail.com",
 });
 
 export const getAnalytics = async () => {

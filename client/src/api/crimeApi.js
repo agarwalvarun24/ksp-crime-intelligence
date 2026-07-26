@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: "https://crime-api-50044357808.development.catalystappsail.com"
 });
 
 export const getCrimes = async (filters = {}) => {
