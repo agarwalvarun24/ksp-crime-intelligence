@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "csv-parser": "^3.2.1",
     "lucide-react": "^1.26.0",
     "reactflow": "^11.11.4",
-    "recharts": "^3.10.0"
+    "recharts": "^3.10.0",
+    "zcatalyst-sdk-node": "^3.4.0"
   }
 }

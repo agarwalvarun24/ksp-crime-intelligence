@@ -1,0 +1,11 @@
+CrimeNo,FIRNumber,CrimeDate,PoliceStation,CrimeHead,CrimeSubHead,Status,Latitude,Longitude,Description
+FIR001,KA2026001,2026-01-05,Bengaluru Central,Cyber Crime,Online Fraud,Pending,12.9716,77.5946,Online banking fraud case
+FIR002,KA2026002,2026-01-12,Mysuru City,Theft,Vehicle Theft,Solved,12.2958,76.6394,Two wheeler theft
+FIR003,KA2026003,2026-02-02,Belagavi Police,Fraud,Banking Fraud,Pending,15.8497,74.4977,Bank account fraud
+FIR004,KA2026004,2026-02-18,Bengaluru North,Cyber Crime,Phishing,Investigation,13.0827,77.5806,Email phishing attack
+FIR005,KA2026005,2026-03-10,Hubballi Police,Assault,Physical Assault,Solved,15.3647,75.124,Street assault case
+FIR006,KA2026006,2026-03-22,Mangaluru Police,Theft,House Theft,Pending,12.9141,74.856,Residential theft
+FIR007,KA2026007,2026-04-08,Bengaluru Central,Cyber Crime,Online Fraud,Pending,12.9716,77.5946,UPI fraud
+FIR008,KA2026008,2026-05-15,Mysuru City,Murder,Homicide,Investigation,12.2958,76.6394,Criminal homicide
+FIR009,KA2026009,2026-06-01,Belagavi Police,Theft,Vehicle Theft,Solved,15.8497,74.4977,Car theft
+FIR010,KA2026010,2026-06-20,Bengaluru North,Fraud,Banking Fraud,Pending,13.0827,77.5806,Financial fraud

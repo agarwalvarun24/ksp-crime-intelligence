@@ -1,0 +1,6 @@
+AccusedID,CrimeNo,Name,Age,Gender,Status
+1,FIR001,Arjun Verma,28,Male,Suspect
+2,FIR003,Ravi Shetty,36,Male,Suspect
+3,FIR004,Kiran Das,31,Male,Suspect
+4,FIR005,Vikram Rao,27,Male,Arrested
+5,FIR008,Suresh Naik,42,Male,Arrested
